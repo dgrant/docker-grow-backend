@@ -1,11 +1,11 @@
 FROM openjdk:8-jdk
 
-ARG MAVEN_VERSION=3.5.2
+ARG MAVEN_VERSION=3.5.3
 ARG USER_HOME_DIR="/root"
-ARG SHA=707b1f6e390a65bde4af4cdaf2a24d45fc19a6ded00fff02e91626e3e42ceaff
-ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
+ARG SHA=b52956373fab1dd4277926507ab189fb797b3bc51a2a267a193c931fffad8408
+ARG BASE_URL=http://mirror.its.dal.ca/apache/maven/maven-3/${MAVEN_VERSION}/binaries
 
-ARG CLOUD_SDK_VERSION=187.0.0
+ARG CLOUD_SDK_VERSION=200.0.0
 
 RUN apt-get -qqy update && apt-get install -qqy \
         curl \
@@ -17,9 +17,10 @@ RUN apt-get -qqy update && apt-get install -qqy \
         git \
         python3 \
         python3-setuptools \
-        python3-pip
+        python3-pip \
+        apt-utils
 
-RUN sudo pip3 install requests
+RUN pip3 install requests
 
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
