@@ -15,7 +15,11 @@ RUN apt-get -qqy update && apt-get install -qqy \
         apt-transport-https \
         openssh-client \
         git \
-        python3
+        python3 \
+        python3-setuptools \
+        python3-pip
+
+RUN sudo pip3 install requests
 
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
