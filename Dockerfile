@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk
+FROM openjdk:8-jdk-stretch
 
 ARG MAVEN_VERSION=3.5.3
 ARG USER_HOME_DIR="/root"
@@ -8,17 +8,18 @@ ARG BASE_URL=http://mirror.its.dal.ca/apache/maven/maven-3/${MAVEN_VERSION}/bina
 ARG CLOUD_SDK_VERSION=200.0.0
 
 RUN apt-get -qqy update && apt-get install -qqy \
-        curl \
-        gcc \
-        python-dev \
-        python-setuptools \
-        apt-transport-https \
-        openssh-client \
-        git \
-        python3 \
-        python3-setuptools \
-        python3-pip \
-        apt-utils
+curl \
+gcc \
+python-dev \
+python-setuptools \
+apt-transport-https \
+openssh-client \
+git \
+python3 \
+python3-setuptools \
+python3-pip \
+apt-utils \
+git-crypt
 
 RUN pip3 install requests
 
