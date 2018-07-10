@@ -5,7 +5,7 @@ ARG USER_HOME_DIR="/root"
 ARG SHA=b52956373fab1dd4277926507ab189fb797b3bc51a2a267a193c931fffad8408
 ARG BASE_URL=http://mirror.its.dal.ca/apache/maven/maven-3/${MAVEN_VERSION}/binaries
 
-ARG CLOUD_SDK_VERSION=200.0.0
+ARG CLOUD_SDK_VERSION=208.0.0
 
 RUN apt-get -qqy update && apt-get install -qqy \
 curl \
