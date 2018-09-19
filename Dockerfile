@@ -184,12 +184,12 @@ RUN pip3 install pipenv
 ##############################################################################
 ARG CLOUD_SDK_VERSION=208.0.0
 RUN apt-get update \
-  && apt-get install -y apt-transport-https
+  && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
   && echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list \
   && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
   && apt-get update \
-  && apt-get install -y google-cloud-sdk=${CLOUD_SDK_VERSION}-0 google-cloud-sdk-app-engine-java
+  && apt-get install -y --no-install-recommends google-cloud-sdk=${CLOUD_SDK_VERSION}-0 google-cloud-sdk-app-engine-java
 
 
 ##############################################################################
@@ -213,5 +213,12 @@ VOLUME "$USER_HOME_DIR/.m2"
 ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
 CMD ["mvn"]
 
+##############################################################################
+# Install some stuff we need
+##############################################################################
 
-
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+  openssh-client \
+  git-crypt \
+  git
