@@ -221,5 +221,10 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   openssh-client \
   git-crypt \
-  git \
+  git
+
+RUN echo "deb http://mirror.it.ubc.ca/debian/ stretch-backports main contrib non-free" >> /etc/apt/sources.list
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends -t stretch-backports \
+  libgit2-27 \
   libgit2-dev
