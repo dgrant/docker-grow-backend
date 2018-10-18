@@ -210,8 +210,6 @@ ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 COPY mvn-entrypoint.sh /usr/local/bin/mvn-entrypoint.sh
 COPY settings-docker.xml /usr/share/maven/ref/
 VOLUME "$USER_HOME_DIR/.m2"
-ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
-CMD ["mvn"]
 
 ##############################################################################
 # Install some stuff we need
@@ -228,3 +226,18 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends -t stretch-backports \
   libgit2-27 \
   libgit2-dev
+
+##############################################################################
+# Set up GitVersion
+##############################################################################
+
+RUN apt-get update \
+  && apt-get install -y \
+  mono-complete \
+  libgit2-24 \
+  nuget
+
+RUN nuget install GitVersion.CommandLine
+RUN sed -i 's/lib\/linux\/x86_64\/libgit2-15e1193.so/\/usr\/lib\/x86_64-linux-gnu\/libgit2.so.24/g' GitVersion.CommandLine.4.0.0/tools/LibGit2Sharp.dll.config
+RUN cp -r GitVersion.CommandLine.4.0.0/tools/* .
+# GitVersion can then be run by calling "mono ./GitVersion.exe"
