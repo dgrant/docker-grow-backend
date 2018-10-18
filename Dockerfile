@@ -239,5 +239,4 @@ RUN apt-get update \
 
 RUN nuget install GitVersion.CommandLine
 RUN sed -i 's/lib\/linux\/x86_64\/libgit2-15e1193.so/\/usr\/lib\/x86_64-linux-gnu\/libgit2.so.24/g' GitVersion.CommandLine.4.0.0/tools/LibGit2Sharp.dll.config
-RUN cp -r GitVersion.CommandLine.4.0.0/tools/* .
-# GitVersion can then be run by calling "mono ./GitVersion.exe"
+COPY gitversion /usr/local/bin/gitversion
