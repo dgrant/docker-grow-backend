@@ -182,7 +182,7 @@ RUN pip3 install pipenv
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=208.0.0
+ARG CLOUD_SDK_VERSION=235.0.0
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
