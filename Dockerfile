@@ -10,6 +10,7 @@ ARG USER_HOME_DIR="/root"
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
 		curl \
+		netbase \
 		wget \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -17,7 +18,7 @@ RUN set -ex; \
 	if ! command -v gpg > /dev/null; then \
 		apt-get update; \
 		apt-get install -y --no-install-recommends \
-			gnupg2 \
+			gnupg \
 			dirmngr \
 		; \
 		rm -rf /var/lib/apt/lists/*; \
@@ -27,7 +28,7 @@ RUN set -ex; \
 # Install Build deps (for Python, but for other stuff too)
 # This is copied from: https://github.com/docker-library/buildpack-deps/blob/d7da72aaf3bb93fecf5fcb7c6ff154cb0c55d1d1/stretch/scm/Dockerfile
 ##############################################################################
-# procps is very common in build systems, and is a reasonably small package
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		bzr \
 		git \
@@ -43,6 +44,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Build deps (for Python, but for other stuff too)
 # This is copied from: https://github.com/docker-library/buildpack-deps/blob/d7da72aaf3bb93fecf5fcb7c6ff154cb0c55d1d1/stretch/Dockerfile
 ##############################################################################
+
 RUN set -ex; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
@@ -63,6 +65,7 @@ RUN set -ex; \
 		libgdbm-dev \
 		libgeoip-dev \
 		libglib2.0-dev \
+		libgmp-dev \
 		libjpeg-dev \
 		libkrb5-dev \
 		liblzma-dev \
@@ -82,6 +85,7 @@ RUN set -ex; \
 		libyaml-dev \
 		make \
 		patch \
+		unzip \
 		xz-utils \
 		zlib1g-dev \
 		\
@@ -102,6 +106,7 @@ RUN set -ex; \
 # except the gpg stuff was removed because it wasn't working
 # ensure local python is preferred over distribution python
 ##############################################################################
+# ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
 
 # http://bugs.python.org/issue19846
@@ -114,7 +119,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV PYTHON_VERSION 3.7.0
+ENV PYTHON_VERSION 3.7.3
 
 RUN set -ex \
 	\
@@ -155,7 +160,7 @@ RUN cd /usr/local/bin \
 	&& ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 18.0
+ENV PYTHON_PIP_VERSION 19.0.3
 
 RUN set -ex; \
 	\
@@ -182,7 +187,7 @@ RUN pip3 install pipenv
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=235.0.0
+ARG CLOUD_SDK_VERSION=240.0.0
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
