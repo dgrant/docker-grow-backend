@@ -114,7 +114,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV PYTHON_VERSION 3.7.0
+ENV PYTHON_VERSION 3.7.3
 
 RUN set -ex \
 	\
@@ -182,7 +182,7 @@ RUN pip3 install pipenv
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=235.0.0
+ARG CLOUD_SDK_VERSION=242.0.0
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
@@ -195,7 +195,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
 ##############################################################################
 # Install Maven
 ##############################################################################
-ARG MAVEN_VERSION=3.5.4
+ARG MAVEN_VERSION=3.6.1
 ARG BASE_URL=http://mirror.its.dal.ca/apache/maven/maven-3/${MAVEN_VERSION}/binaries
 ARG USER_HOME_DIR="/root"
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
