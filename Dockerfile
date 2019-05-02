@@ -240,3 +240,17 @@ RUN apt-get update \
 RUN nuget install GitVersion.CommandLine
 RUN sed -i 's/lib\/linux\/x86_64\/libgit2-15e1193.so/\/usr\/lib\/x86_64-linux-gnu\/libgit2.so.24/g' GitVersion.CommandLine.4.0.0/tools/LibGit2Sharp.dll.config
 COPY gitversion /usr/local/bin/gitversion
+
+##############################################################################
+# Set up Geckodriver
+##############################################################################
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+  xvfb
+
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz \
+  && mkdir geckodriver \
+  && tar -xzf geckodriver-v0.24.0-linux64.tar.gz -C geckodriver
+COPY geckodriver/geckodriver /usr/local/bin
+RUN rm -rf geckodriver
