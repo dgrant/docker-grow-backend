@@ -248,7 +248,8 @@ COPY gitversion /usr/local/bin/gitversion
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   xvfb \
-  xauth
+  xauth \
+  firefox-esr
 
 RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 RUN tar zxzf geckodriver-v0.24.0-linux64.tar.gz
