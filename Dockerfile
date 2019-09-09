@@ -114,7 +114,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV PYTHON_VERSION 3.7.3
+ENV PYTHON_VERSION 3.7.4
 
 RUN set -ex \
 	\
@@ -182,7 +182,7 @@ RUN pip3 install pipenv
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=242.0.0
+ARG CLOUD_SDK_VERSION=261.0.0
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
@@ -195,7 +195,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
 ##############################################################################
 # Install Maven
 ##############################################################################
-ARG MAVEN_VERSION=3.6.1
+ARG MAVEN_VERSION=3.6.2
 ARG BASE_URL=http://mirror.its.dal.ca/apache/maven/maven-3/${MAVEN_VERSION}/binaries
 ARG USER_HOME_DIR="/root"
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
@@ -230,15 +230,16 @@ RUN apt-get update \
 ##############################################################################
 # Set up GitVersion
 ##############################################################################
+ARG GIT_VERSION_VERSION=5.0.1
 
 RUN apt-get update \
-  && apt-get install -y \
+  && apt-get install -y --no-install-recommends \
   mono-complete \
   libgit2-24 \
   nuget
 
-RUN nuget install GitVersion.CommandLine
-RUN sed -i 's/lib\/linux\/x86_64\/libgit2-15e1193.so/\/usr\/lib\/x86_64-linux-gnu\/libgit2.so.24/g' GitVersion.CommandLine.4.0.0/tools/LibGit2Sharp.dll.config
+RUN nuget install GitVersion.CommandLine -Version ${GIT_VERSION_VERSION}
+RUN sed -i 's/lib\/linux\/x86_64\/libgit2-15e1193.so/\/usr\/lib\/x86_64-linux-gnu\/libgit2.so.24/g' GitVersion.CommandLine.${GIT_VERSION_VERSION}/tools/LibGit2Sharp.dll.config
 COPY gitversion /usr/local/bin/gitversion
 
 ##############################################################################
