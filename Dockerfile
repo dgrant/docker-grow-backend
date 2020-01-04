@@ -114,7 +114,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV PYTHON_VERSION 3.7.4
+ENV PYTHON_VERSION 3.8.1
 
 RUN set -ex \
 	\
@@ -155,7 +155,7 @@ RUN cd /usr/local/bin \
 	&& ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 18.0
+ENV PYTHON_PIP_VERSION 19.3.1
 
 RUN set -ex; \
 	\
@@ -179,10 +179,15 @@ RUN set -ex; \
 
 RUN pip3 install pipenv
 
+# Install Poetry
+ENV POETRY_VERSION 1.0.0
+
+RUN pip3 install "poetry==$POETRY_VERSION"
+
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=261.0.0
+ARG CLOUD_SDK_VERSION=274.0.1
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
@@ -195,7 +200,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
 ##############################################################################
 # Install Maven
 ##############################################################################
-ARG MAVEN_VERSION=3.6.2
+ARG MAVEN_VERSION=3.6.3
 ARG BASE_URL=http://mirror.its.dal.ca/apache/maven/maven-3/${MAVEN_VERSION}/binaries
 ARG USER_HOME_DIR="/root"
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
@@ -232,7 +237,7 @@ RUN apt-get update \
 ##############################################################################
 # Set up GitVersion
 ##############################################################################
-ARG GIT_VERSION_VERSION=5.0.1
+ARG GIT_VERSION_VERSION=5.1.3
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -247,6 +252,7 @@ COPY gitversion /usr/local/bin/gitversion
 ##############################################################################
 # Set up Geckodriver
 ##############################################################################
+ARG GECKODRIVER_VERSION=0.26.0
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -254,8 +260,8 @@ RUN apt-get update \
   xauth \
   firefox-esr
 
-RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
-RUN tar zxzf geckodriver-v0.24.0-linux64.tar.gz
-RUN rm geckodriver-v0.24.0-linux64.tar.gz
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
+RUN tar zxzf geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
+RUN rm geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
 RUN cp geckodriver /usr/local/bin/
 RUN rm -rf geckodriver
