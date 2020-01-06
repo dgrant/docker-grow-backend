@@ -237,7 +237,7 @@ RUN apt-get update \
 ##############################################################################
 # Set up GitVersion
 ##############################################################################
-ARG GIT_VERSION_VERSION=5.1.3
+ARG GIT_VERSION_VERSION=5.0.1
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
