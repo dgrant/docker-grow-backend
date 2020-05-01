@@ -225,7 +225,8 @@ RUN apt-get update \
   openssh-client \
   git-crypt \
   git \
-  postgresql-client-9.6
+  postgresql-client-9.6 \
+  zip
   
 
 RUN echo "deb http://mirror.it.ubc.ca/debian/ stretch-backports main contrib non-free" >> /etc/apt/sources.list
