@@ -236,21 +236,21 @@ RUN apt-get update \
   libgit2-dev
 
 ##############################################################################
-# set up geckodriver
+# Set up Geckodriver
 ##############################################################################
-arg geckodriver_version=0.26.0
+ARG GECKODRIVER_VERSION=0.26.0
 
-run apt-get update \
+RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   xvfb \
   xauth \
   firefox-esr
 
-run wget https://github.com/mozilla/geckodriver/releases/download/v${geckodriver_version}/geckodriver-v${geckodriver_version}-linux64.tar.gz
-run tar zxzf geckodriver-v${geckodriver_version}-linux64.tar.gz
-run rm geckodriver-v${geckodriver_version}-linux64.tar.gz
-run cp geckodriver /usr/local/bin/
-run rm -rf geckodriver
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v${GECKODRIVER_VERSION}/geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
+RUN tar zxzf geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
+RUN rm geckodriver-v${GECKODRIVER_VERSION}-linux64.tar.gz
+RUN cp geckodriver /usr/local/bin/
+RUN rm -rf geckodriver
 
 ##############################################################################
 # set up jdk 11
