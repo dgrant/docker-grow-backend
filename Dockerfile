@@ -363,4 +363,3 @@ RUN set -eux; \
 # basic smoke test
         javac --version; \
         java --version
-
