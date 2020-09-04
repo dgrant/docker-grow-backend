@@ -114,7 +114,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV PYTHON_VERSION 3.8.1
+ENV PYTHON_VERSION 3.8.5
 
 RUN set -ex \
 	\
@@ -155,7 +155,7 @@ RUN cd /usr/local/bin \
 	&& ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 19.3.1
+ENV PYTHON_PIP_VERSION 20.2.2
 
 RUN set -ex; \
 	\
@@ -187,7 +187,7 @@ RUN pip3 install "poetry==$POETRY_VERSION"
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=274.0.1
+ARG CLOUD_SDK_VERSION=308.0.0
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
@@ -235,25 +235,11 @@ RUN apt-get update \
   libgit2-27 \
   libgit2-dev
 
-##############################################################################
-# Set up GitVersion
-##############################################################################
-ARG GIT_VERSION_VERSION=5.0.1
-
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-  mono-complete \
-  libgit2-24 \
-  nuget
-
-RUN nuget install GitVersion.CommandLine -Version ${GIT_VERSION_VERSION}
-RUN sed -i 's/lib\/linux\/x86_64\/libgit2-15e1193.so/\/usr\/lib\/x86_64-linux-gnu\/libgit2.so.24/g' GitVersion.CommandLine.${GIT_VERSION_VERSION}/tools/LibGit2Sharp.dll.config
-COPY gitversion /usr/local/bin/gitversion
 
 ##############################################################################
 # Set up Geckodriver
 ##############################################################################
-ARG GECKODRIVER_VERSION=0.26.0
+ARG GECKODRIVER_VERSION=0.27.0
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
