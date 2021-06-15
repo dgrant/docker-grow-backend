@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-stretch
+FROM openjdk:8-jdk-buster
 
 ARG USER_HOME_DIR="/root"
 
