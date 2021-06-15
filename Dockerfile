@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-stretch
+FROM openjdk:8-jdk-buster
 
 ARG USER_HOME_DIR="/root"
 
@@ -187,7 +187,7 @@ RUN pip3 install "poetry==$POETRY_VERSION"
 ##############################################################################
 # Install Cloud SDK
 ##############################################################################
-ARG CLOUD_SDK_VERSION=323.0.0
+ARG CLOUD_SDK_VERSION=343.0.0
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-transport-https
 RUN export CLOUD_SDK_REPO="cloud-sdk-stretch" \
